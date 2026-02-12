@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belle's Fit 8.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- Core Styles (Luxury Minimal) --- */
+        :root { --bg-color: #000000; --card-bg: #1A1A1A; --text-gold: #C5A059; --text-white: #E0E0E0; --border: #333; }
+        body { background-color: var(--bg-color); color: var(--text-white); font-family: 'Prompt', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        .container { width: 100%; max-width: 420px; }
+        h1 { font-family: 'Playfair Display', serif; color: var(--text-gold); text-align: center; margin: 0; font-size: 2.2rem; }
+        .subtitle { text-align: center; color: #666; font-size: 0.8rem; margin-bottom: 25px; letter-spacing: 2px; }
+
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .card-title { color: var(--text-gold); font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Status & Progress */
+        .status-row { display: flex; justify-content: space-between; align-items: flex-end; }
+        .big-number { font-size: 3.5rem; line-height: 1; font-weight: bold; color: var(--text-white); }
+        .unit { font-size: 0.9rem; color: #888; }
+        .phase-badge { background: rgba(197, 160, 89, 0.15); color: var(--text-gold); padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; display: inline-block; margin-bottom: 10px; }
+        .progress-bar-bg { background: #333; height: 6px; border-radius: 3px; margin-top: 10px; }
+        .progress-bar-fill { background: var(--text-gold); height: 100%; border-radius: 3px; width: 0%; transition: 0.5s; }
+
+        /* --- NEW: Routine & Rules List Styles --- */
+        .routine-row { display: flex; margin-bottom: 12px; align-items: flex-start; }
+        .routine-time { color: var(--text-gold); font-weight: bold; min-width: 60px; font-size: 0.9rem; }
+        .routine-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
+        
+        .rules-list { list-style: none; padding: 0; margin: 0; }
+        .rules-list li { margin-bottom: 10px; font-size: 0.9rem; color: #ccc; display: flex; align-items: center; }
+        .rules-list li span { color: var(--text-gold); margin-right: 10px; font-size: 1.2rem; }
+
+        /* Nutrition Grid */
+        .nutri-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .nutri-box { background: #252525; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333; }
+        .nutri-val { font-size: 1.3rem; font-weight: bold; color: var(--text-white); }
+        .nutri-label { font-size: 0.7rem; color: #888; margin-top: 5px; text-transform: uppercase; }
+        .gold-text { color: var(--text-gold); }
+
+        /* Workout & Modal */
+        .workout-highlight { font-size: 1.4rem; font-weight: 600; color: var(--text-white); margin-bottom: 8px; margin-top: 10px; }
+        .workout-detail { color: #aaa; font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
+        .btn-view-table { background: transparent; border: 1px solid var(--text-gold); color: var(--text-gold); padding: 5px 15px; font-size: 0.8rem; border-radius: 50px; cursor: pointer; }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; flex-direction: column; }
+        .modal img { max-width: 95%; max-height: 80vh; border-radius: 10px; box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); }
+        .close-btn { color: white; font-size: 2rem; margin-top: 20px; cursor: pointer; background: #333; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
+
+        /* History Log */
+        .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+        .input-label { font-size: 0.75rem; color: #888; margin-bottom: 5px; }
+        input { background: #252525; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; width: 100%; font-family: 'Prompt'; font-size: 0.9rem; box-sizing: border-box; text-align: center; }
+        .btn-save { background: var(--text-gold); color: black; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; margin-top: 10px; }
+        .history-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
+        .history-table th { text-align: center; color: var(--text-gold); border-bottom: 1px solid #444; padding: 6px 2px; font-weight: normal; }
+        .history-table td { border-bottom: 1px solid #333; padding: 6px 2px; color: #ccc; text-align: center; }
+        .history-table td:first-child { text-align: left; color: #888; }
+        .del-btn { color: #ff5555; cursor: pointer; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>BELL FIT</h1>
+        <div class="subtitle">90-DAY TRANSFORMATION</div>
+
+        <div class="card">
+            <div id="phaseDisplay" class="phase-badge">Checking...</div>
+            <div class="status-row">
+                <div>
+                    <div class="unit">DAY</div>
+                    <div id="dayDisplay" class="big-number">1</div>
+                </div>
+                <div style="text-align: right;">
+                    <div class="unit">GOAL</div>
+                    <div class="big-number" style="font-size: 1.5rem; color: var(--text-gold);">10 KG</div>
+                </div>
+            </div>
+            <div class="progress-bar-bg">
+                <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">⏰ DAILY ROUTINE</div>
+            <div class="routine-row">
+                <div class="routine-time">05:00</div>
+                <div class="routine-desc">ตื่นนอน / กาแฟดำหรือชาเขียว (ไม่หวาน)</div>
+            </div>
+            <div class="routine-row">
+                <div class="routine-time">05:30</div>
+                <div class="routine-desc">ยิม 2 ชม. (เวท + คาร์ดิโอ)</div>
+            </div>
+            <div class="routine-row">
+                <div class="routine-time">During Day</div>
+                <div class="routine-desc">งีบพัก 15-20 นาที (Power Nap)</div>
+            </div>
+            <div class="routine-row">
+                <div class="routine-time">23:00</div>
+                <div class="routine-desc">เข้านอน (ห้ามดึกกว่านี้!)</div>
+            </div>
+        </div>
+
+        <div class="nutri-grid">
+            <div class="nutri-box"><div id="riceDisplay" class="nutri-val gold-text">400g</div><div class="nutri-label">RICE (TARGET)</div></div>
+            <div class="nutri-box"><div id="cardioDisplay" class="nutri-val gold-text">40m</div><div class="nutri-label">CARDIO (MIN)</div></div>
+        </div>
+
+        <div class="card" style="margin-top: 10px;">
+            <div class="card-title">🥗 DAILY BASE NUTRITION</div>
+            <ul class="rules-list">
+                <li><span>🥩</span> เนื้อสัตว์ (ดิบ): 450 - 500 กรัม</li>
+                <li><span>🥚</span> ไข่ต้ม: 3 ฟอง</li>
+                <li><span>🥦</span> ผัก: ไม่อั้น (เน้นใบเขียว)</li>
+                <li><span>💧</span> น้ำดื่ม: 3 ลิตรขึ้นไป</li>
+            </ul>
+        </div>
+
+        <div class="card" style="margin-top: 15px;">
+            <div class="card-title">
+                <span>🏋️ MISSION: <span id="dayNameDisplay">MONDAY</span></span>
+                <button id="viewTableBtn" class="btn-view-table" onclick="openModal()" style="display:none;">🔎 VIEW TABLE</button>
+            </div>
+            <div id="workoutTitle" class="workout-highlight">Loading...</div>
+            <div id="workoutDesc" class="workout-detail">Please wait</div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📝 DAILY LOG</div>
+            <div class="input-grid">
+                <div><div class="input-label">น้ำหนัก (kg)</div><input type="number" id="logWeight" placeholder="0.0"></div>
+                <div><div class="input-label">อก (นิ้ว)</div><input type="number" id="logChest" placeholder="0.0"></div>
+                <div><div class="input-label">เอว (นิ้ว)</div><input type="number" id="logWaist" placeholder="0.0"></div>
+                <div><div class="input-label">สะโพก (นิ้ว)</div><input type="number" id="logHip" placeholder="0.0"></div>
+            </div>
+            <button class="btn-save" onclick="saveLog()">💾 บันทึกสถิติวันนี้</button>
+            <div style="margin-top: 25px;">
+                <div class="card-title" style="border:none; margin-bottom:5px;">📊 HISTORY</div>
+                <table class="history-table">
+                    <thead><tr><th style="text-align:left;">Date</th><th>Kg</th><th>อก</th><th>เอว</th><th>โพก</th><th></th></tr></thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color: #444;">App V.8.0 | Routine & Rules Added</div>
+    </div>
+
+    <div id="imageModal" class="modal" onclick="closeModal()">
+        <img id="workoutImage" src="" alt="Workout Table">
+        <div class="close-btn">✕</div>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const startDate = new Date(2026, 1, 13); // 13 ก.พ. 2026
+        
+        // --- 1. Date Logic ---
+        const today = new Date();
+        const diffTime = Math.abs(today - startDate);
+        const currentDay = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+        const dayOfWeek = today.getDay(); 
+        const dayNames = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
+        document.getElementById('dayNameDisplay').innerText = dayNames[dayOfWeek];
+        document.getElementById('dayDisplay').innerText = currentDay;
+        document.getElementById('progressBar').style.width = Math.min((currentDay/90)*100, 100) + "%";
+
+        // --- 2. Weekly Plan Logic ---
+        let rice="400g", cardio="40m", phaseText="Week 1-2: Base Build";
+        if (currentDay <= 14) { rice = "400g"; cardio = "40m"; phaseText = "Week 1-2: Base Build"; }
+        else if (currentDay <= 28) { rice = "300g"; cardio = "50m"; phaseText = "Week 3-4: Burn Step 1"; }
+        else if (currentDay <= 35) { rice = "200g"; cardio = "45m"; phaseText = "Week 5: Intense Cut"; }
+        else if (currentDay <= 49) { rice = "400g"; cardio = "60m"; phaseText = "Week 6-7: Re-feed"; }
+        else { rice = "500g"; cardio = "60m + HIIT"; phaseText = "Week 8-10: Max Performance"; }
+        
+        document.getElementById('riceDisplay').innerText = rice;
+        document.getElementById('cardioDisplay').innerText = cardio;
+        document.getElementById('phaseDisplay').innerText = phaseText;
+
+        // --- 3. Workout Logic ---
+        let workoutTitle = "Rest Day", imageName = "";
+        if (currentDay <= 28) { 
+            if (dayOfWeek === 1 || dayOfWeek === 4) { workoutTitle="Day A: Shoulders"; imageName="p1-a.jpg"; }
+            else if (dayOfWeek === 2 || dayOfWeek === 5) { workoutTitle="Day B: Squat"; imageName="p1-b.jpg"; }
+            else if (dayOfWeek === 3) { workoutTitle="Cardio & Abs"; imageName=""; }
+            else { workoutTitle="Rest / Cardio"; imageName=""; }
+        } else { 
+            if (dayOfWeek === 1) imageName = (currentDay > 56) ? "p3-a.jpg" : "p2-a.jpg";
+            else if (dayOfWeek === 2) imageName = (currentDay > 56) ? "p3-b.jpg" : "p2-b.jpg";
+            else if (dayOfWeek === 4) imageName = (currentDay > 56) ? "p3-c.jpg" : "p2-c.jpg";
+            else if (dayOfWeek === 5) imageName = (currentDay > 56) ? "p3-d.jpg" : "p2-d.jpg";
+            else imageName = "";
+            workoutTitle = imageName ? "Check Table" : "Cardio / Rest";
+        }
+        
+        document.getElementById('workoutTitle').innerText = imageName ? "Tap button below" : workoutTitle;
+        document.getElementById('workoutDesc').innerText = imageName ? "View today's workout table" : "Focus on recovery or cardio";
+        const btn = document.getElementById('viewTableBtn');
+        if(imageName !== "") { btn.style.display = "block"; btn.onclick = function() { openModal(imageName); }; }
+        else { btn.style.display = "none"; }
+        
+        function openModal(imgName) { document.getElementById('workoutImage').src = imgName; document.getElementById('imageModal').style.display = "flex"; }
+        function closeModal() { document.getElementById('imageModal').style.display = "none"; }
+
+        // --- 4. History Log ---
+        const historyKey = 'belle_fit_log_v8'; // เปลี่ยน key เพื่อไม่ให้ตีกับเวอร์ชันเก่า
+        let historyData = [];
+        window.onload = function() {
+            const savedData = localStorage.getItem(historyKey);
+            if(savedData) { historyData = JSON.parse(savedData); renderHistory(); }
+        }
+        function saveLog() {
+            const w = document.getElementById('logWeight').value;
+            const chest = document.getElementById('logChest').value;
+            const waist = document.getElementById('logWaist').value;
+            const hip = document.getElementById('logHip').value;
+            const d = new Date();
+            const dateStr = d.getDate() + "/" + (d.getMonth()+1);
+            if(!w && !chest && !waist && !hip) { alert("กรุณากรอกข้อมูลอย่างน้อย 1 ช่องค่ะ"); return; }
+            historyData.unshift({ id: Date.now(), date: dateStr, weight: w || "-", chest: chest || "-", waist: waist || "-", hip: hip || "-" });
+            localStorage.setItem(historyKey, JSON.stringify(historyData));
+            document.getElementById('logWeight').value = ""; document.getElementById('logChest').value = "";
+            document.getElementById('logWaist').value = ""; document.getElementById('logHip').value = "";
+            renderHistory();
+        }
+        function renderHistory() {
+            const tbody = document.getElementById('historyBody'); tbody.innerHTML = "";
+            historyData.forEach((log, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${log.date}</td><td style="color:var(--text-white); font-weight:bold;">${log.weight}</td><td>${log.chest}</td><td>${log.waist}</td><td>${log.hip}</td><td style="text-align:right;"><span class="del-btn" onclick="deleteLog(${index})">×</span></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+        function deleteLog(index) { if(confirm("ลบไหมคะ?")) { historyData.splice(index, 1); localStorage.setItem(historyKey, JSON.stringify(historyData)); renderHistory(); } }
+    </script>
+</body>
+</html>
