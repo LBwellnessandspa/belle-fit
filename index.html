@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Belle's Fit 8.0</title>
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Belle's Fit 10.0</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- Core Styles (Luxury Minimal) --- */
+        /* --- Core Styles --- */
         :root { --bg-color: #000000; --card-bg: #1A1A1A; --text-gold: #C5A059; --text-white: #E0E0E0; --border: #333; }
         body { background-color: var(--bg-color); color: var(--text-white); font-family: 'Prompt', sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .container { width: 100%; max-width: 420px; }
@@ -17,9 +14,8 @@
         .subtitle { text-align: center; color: #666; font-size: 0.8rem; margin-bottom: 25px; letter-spacing: 2px; }
 
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
-        .card-title { color: var(--text-gold); font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .card-title { color: var(--text-gold); font-size: 0.9rem; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;}
         
-        /* Status & Progress */
         .status-row { display: flex; justify-content: space-between; align-items: flex-end; }
         .big-number { font-size: 3.5rem; line-height: 1; font-weight: bold; color: var(--text-white); }
         .unit { font-size: 0.9rem; color: #888; }
@@ -27,7 +23,6 @@
         .progress-bar-bg { background: #333; height: 6px; border-radius: 3px; margin-top: 10px; }
         .progress-bar-fill { background: var(--text-gold); height: 100%; border-radius: 3px; width: 0%; transition: 0.5s; }
 
-        /* --- NEW: Routine & Rules List Styles --- */
         .routine-row { display: flex; margin-bottom: 12px; align-items: flex-start; }
         .routine-time { color: var(--text-gold); font-weight: bold; min-width: 60px; font-size: 0.9rem; }
         .routine-desc { color: #ccc; font-size: 0.9rem; flex: 1; }
@@ -36,24 +31,23 @@
         .rules-list li { margin-bottom: 10px; font-size: 0.9rem; color: #ccc; display: flex; align-items: center; }
         .rules-list li span { color: var(--text-gold); margin-right: 10px; font-size: 1.2rem; }
 
-        /* Nutrition Grid */
         .nutri-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .nutri-box { background: #252525; padding: 15px; border-radius: 10px; text-align: center; border: 1px solid #333; }
         .nutri-val { font-size: 1.3rem; font-weight: bold; color: var(--text-white); }
         .nutri-label { font-size: 0.7rem; color: #888; margin-top: 5px; text-transform: uppercase; }
         .gold-text { color: var(--text-gold); }
 
-        /* Workout & Modal */
         .workout-highlight { font-size: 1.4rem; font-weight: 600; color: var(--text-white); margin-bottom: 8px; margin-top: 10px; }
         .workout-detail { color: #aaa; font-size: 0.9rem; line-height: 1.5; margin-bottom: 15px; }
-        .btn-view-table { background: transparent; border: 1px solid var(--text-gold); color: var(--text-gold); padding: 5px 15px; font-size: 0.8rem; border-radius: 50px; cursor: pointer; }
         
-        /* Modal */
+        .btn-group { display: flex; gap: 8px; flex-direction: column; align-items: flex-end; }
+        .btn-view-table { background: transparent; border: 1px solid var(--text-gold); color: var(--text-gold); padding: 5px 15px; font-size: 0.8rem; border-radius: 50px; cursor: pointer; }
+        .btn-abs { border-color: #ff6b6b; color: #ff6b6b; } 
+
         .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; flex-direction: column; }
         .modal img { max-width: 95%; max-height: 80vh; border-radius: 10px; box-shadow: 0 0 20px rgba(197, 160, 89, 0.3); }
         .close-btn { color: white; font-size: 2rem; margin-top: 20px; cursor: pointer; background: #333; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
-        /* History Log */
         .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .input-label { font-size: 0.75rem; color: #888; margin-bottom: 5px; }
         input { background: #252525; border: 1px solid #444; color: white; padding: 10px; border-radius: 8px; width: 100%; font-family: 'Prompt'; font-size: 0.9rem; box-sizing: border-box; text-align: center; }
@@ -68,7 +62,7 @@
 <body>
 
     <div class="container">
-        <h1>BELL FIT</h1>
+        <h1>LA BELLE</h1>
         <div class="subtitle">90-DAY TRANSFORMATION</div>
 
         <div class="card">
@@ -90,27 +84,15 @@
 
         <div class="card">
             <div class="card-title">⏰ DAILY ROUTINE</div>
-            <div class="routine-row">
-                <div class="routine-time">05:00</div>
-                <div class="routine-desc">ตื่นนอน / กาแฟดำหรือชาเขียว (ไม่หวาน)</div>
-            </div>
-            <div class="routine-row">
-                <div class="routine-time">05:30</div>
-                <div class="routine-desc">ยิม 2 ชม. (เวท + คาร์ดิโอ)</div>
-            </div>
-            <div class="routine-row">
-                <div class="routine-time">During Day</div>
-                <div class="routine-desc">งีบพัก 15-20 นาที (Power Nap)</div>
-            </div>
-            <div class="routine-row">
-                <div class="routine-time">23:00</div>
-                <div class="routine-desc">เข้านอน (ห้ามดึกกว่านี้!)</div>
-            </div>
+            <div class="routine-row"><div class="routine-time">05:00</div><div class="routine-desc">ตื่นนอน / กาแฟดำหรือชาเขียว (ไม่หวาน)</div></div>
+            <div class="routine-row"><div class="routine-time">05:30</div><div class="routine-desc">ยิม 2 ชม. (เวท + คาร์ดิโอ)</div></div>
+            <div class="routine-row"><div class="routine-time">During Day</div><div class="routine-desc">งีบพัก 15-20 นาที (Power Nap)</div></div>
+            <div class="routine-row"><div class="routine-time">23:00</div><div class="routine-desc">เข้านอน (ห้ามดึกกว่านี้!)</div></div>
         </div>
 
         <div class="nutri-grid">
             <div class="nutri-box"><div id="riceDisplay" class="nutri-val gold-text">400g</div><div class="nutri-label">RICE (TARGET)</div></div>
-            <div class="nutri-box"><div id="cardioDisplay" class="nutri-val gold-text">40m</div><div class="nutri-label">CARDIO (MIN)</div></div>
+            <div class="nutri-box"><div id="cardioDisplay" class="nutri-val gold-text">-</div><div class="nutri-label">TODAY'S CARDIO</div></div>
         </div>
 
         <div class="card" style="margin-top: 10px;">
@@ -125,8 +107,11 @@
 
         <div class="card" style="margin-top: 15px;">
             <div class="card-title">
-                <span>🏋️ MISSION: <span id="dayNameDisplay">MONDAY</span></span>
-                <button id="viewTableBtn" class="btn-view-table" onclick="openModal()" style="display:none;">🔎 VIEW TABLE</button>
+                <span>🏋️ MISSION: <br><span id="dayNameDisplay" style="color:#888; font-size:0.8rem;">MONDAY</span></span>
+                <div class="btn-group">
+                    <button id="viewTableBtn" class="btn-view-table" style="display:none;">🔎 VIEW TABLE</button>
+                    <button id="viewAbsBtn" class="btn-view-table btn-abs" style="display:none;">🔥 ABS TABLE</button>
+                </div>
             </div>
             <div id="workoutTitle" class="workout-highlight">Loading...</div>
             <div id="workoutDesc" class="workout-detail">Please wait</div>
@@ -150,7 +135,7 @@
             </div>
         </div>
 
-        <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color: #444;">App V.8.0 | Routine & Rules Added</div>
+        <div style="text-align: center; margin-top: 20px; font-size: 0.7rem; color: #444;">App V.10.0 | Master Schedule Sync</div>
     </div>
 
     <div id="imageModal" class="modal" onclick="closeModal()">
@@ -159,58 +144,125 @@
     </div>
 
     <script>
-        // --- Configuration ---
-        const startDate = new Date(2026, 1, 13); // 13 ก.พ. 2026
-        
-        // --- 1. Date Logic ---
+        // --- 1. CONFIGURATION ---
+        const startDate = new Date(2026, 1, 20); // เริ่ม 20 ก.พ. 2026
+
+        // --- 2. DATE LOGIC ---
         const today = new Date();
-        const diffTime = Math.abs(today - startDate);
-        const currentDay = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+        const diffTime = today.getTime() - startDate.getTime();
+        const currentDay = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1 || 1; 
+        
+        let currentWeek = Math.ceil(currentDay / 7);
+        if (currentWeek < 1) currentWeek = 1;
+
         const dayOfWeek = today.getDay(); 
         const dayNames = ["SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"];
-        document.getElementById('dayNameDisplay').innerText = dayNames[dayOfWeek];
-        document.getElementById('dayDisplay').innerText = currentDay;
-        document.getElementById('progressBar').style.width = Math.min((currentDay/90)*100, 100) + "%";
+        document.getElementById('dayNameDisplay').innerText = dayNames[dayOfWeek] + " (WEEK " + currentWeek + ")";
+        document.getElementById('dayDisplay').innerText = currentDay > 0 ? currentDay : 1;
+        document.getElementById('progressBar').style.width = Math.min(((currentDay > 0 ? currentDay : 1)/90)*100, 100) + "%";
 
-        // --- 2. Weekly Plan Logic ---
-        let rice="400g", cardio="40m", phaseText="Week 1-2: Base Build";
-        if (currentDay <= 14) { rice = "400g"; cardio = "40m"; phaseText = "Week 1-2: Base Build"; }
-        else if (currentDay <= 28) { rice = "300g"; cardio = "50m"; phaseText = "Week 3-4: Burn Step 1"; }
-        else if (currentDay <= 35) { rice = "200g"; cardio = "45m"; phaseText = "Week 5: Intense Cut"; }
-        else if (currentDay <= 49) { rice = "400g"; cardio = "60m"; phaseText = "Week 6-7: Re-feed"; }
-        else { rice = "500g"; cardio = "60m + HIIT"; phaseText = "Week 8-10: Max Performance"; }
+        // --- 3. FOOD LOGIC (อิงตามสัปดาห์) ---
+        let rice="400g", phaseText=`Week ${currentWeek}: Base Build`;
+        if (currentWeek <= 2) { rice = "400g"; phaseText = `Week ${currentWeek}: Base Build`; }
+        else if (currentWeek <= 4) { rice = "300g"; phaseText = `Week ${currentWeek}: Burn Step 1`; }
+        else if (currentWeek === 5) { rice = "200g"; phaseText = `Week ${currentWeek}: Intense Cut`; }
+        else if (currentWeek <= 7) { rice = "400g"; phaseText = `Week ${currentWeek}: Re-feed`; }
+        else { rice = "500g"; phaseText = `Week ${currentWeek}: Max Performance`; }
         
         document.getElementById('riceDisplay').innerText = rice;
-        document.getElementById('cardioDisplay').innerText = cardio;
         document.getElementById('phaseDisplay').innerText = phaseText;
 
-        // --- 3. Workout Logic ---
-        let workoutTitle = "Rest Day", imageName = "";
-        if (currentDay <= 28) { 
-            if (dayOfWeek === 1 || dayOfWeek === 4) { workoutTitle="Day A: Shoulders"; imageName="p1-a.jpg"; }
-            else if (dayOfWeek === 2 || dayOfWeek === 5) { workoutTitle="Day B: Squat"; imageName="p1-b.jpg"; }
-            else if (dayOfWeek === 3) { workoutTitle="Cardio & Abs"; imageName=""; }
-            else { workoutTitle="Rest / Cardio"; imageName=""; }
+        // --- 4. MASTER SCHEDULE LOGIC ---
+        
+        // ก. คำนวณหาชื่อโฟลเดอร์รูปภาพ (Prefix) ว่าสัปดาห์นี้ต้องดึงรูปเซ็ตไหน
+        let weekPrefix = "1";
+        if (currentWeek <= 4) weekPrefix = "1";
+        else if (currentWeek === 5) weekPrefix = "5";
+        else if (currentWeek <= 9) weekPrefix = "6";
+        else if (currentWeek === 10) weekPrefix = "10";
+        else if (currentWeek <= 14) weekPrefix = "11";
+        else weekPrefix = "15";
+
+        // ข. กำหนดค่าเริ่มต้น
+        let workoutTitle = "Rest Day", workoutDesc = "", imageName = "", absImageName = "", dailyCardio = "Rest";
+
+        // ค. เช็ควันจันทร์ - อาทิตย์
+        if (dayOfWeek === 1) { // วันจันทร์ (Day A + Cardio)
+            workoutTitle = "Day A + Cardio";
+            imageName = `w${weekPrefix}-a.jpg`;
+            if (weekPrefix === "1" || weekPrefix === "11") dailyCardio = "45m";
+            else if (weekPrefix === "15") dailyCardio = "40m";
+            else dailyCardio = "60m"; // Week 5, 6, 10
+            workoutDesc = `เวทเทรนนิ่ง Day A และคาร์ดิโอ ${dailyCardio}`;
+        } 
+        else if (dayOfWeek === 2) { // วันอังคาร (Day B + Abs)
+            workoutTitle = "Day B + Abs";
+            imageName = `w${weekPrefix}-b.jpg`;
+            absImageName = "Abs.jpg";
+            dailyCardio = "-"; 
+            workoutDesc = `เวทเทรนนิ่ง Day B และปั้นหน้าท้อง (Abs)`;
+        } 
+        else if (dayOfWeek === 3) { // วันพุธ (Cardio + Abs)
+            workoutTitle = "Cardio + Abs";
+            absImageName = "Abs.jpg";
+            if (weekPrefix === "1" || weekPrefix === "5" || weekPrefix === "6" || weekPrefix === "10") dailyCardio = "60m";
+            else if (weekPrefix === "11") dailyCardio = "45m";
+            else if (weekPrefix === "15") dailyCardio = "40m";
+            workoutDesc = `คาร์ดิโอ ${dailyCardio} และปั้นหน้าท้อง (Abs)`;
+        } 
+        else if (dayOfWeek === 4) { // วันพฤหัส (Day C + Cardio)
+            workoutTitle = "Day C + Cardio";
+            imageName = `w${weekPrefix}-c.jpg`;
+            if (weekPrefix === "1" || weekPrefix === "6" || weekPrefix === "11") dailyCardio = "45m";
+            else if (weekPrefix === "5" || weekPrefix === "10") dailyCardio = "60m";
+            else if (weekPrefix === "15") dailyCardio = "40m";
+            workoutDesc = `เวทเทรนนิ่ง Day C และคาร์ดิโอ ${dailyCardio}`;
+        } 
+        else if (dayOfWeek === 5) { // วันศุกร์ (Day D + Abs)
+            workoutTitle = "Day D + Abs";
+            imageName = `w${weekPrefix}-d.jpg`;
+            absImageName = "Abs.jpg";
+            dailyCardio = "-";
+            workoutDesc = `เวทเทรนนิ่ง Day D และปั้นหน้าท้อง (Abs)`;
+        } 
+        else if (dayOfWeek === 6) { // วันเสาร์ (Rest Day)
+            workoutTitle = "Rest Day";
+            workoutDesc = "พักผ่อนฟื้นฟูร่างกายอย่างเต็มที่ (No Gym)";
+        } 
+        else if (dayOfWeek === 0) { // วันอาทิตย์ (HIIT Cardio)
+            workoutTitle = "HIIT Cardio";
+            dailyCardio = "HIIT";
+            workoutDesc = "คาร์ดิโอแบบหนักสลับเบา (HIIT) รีดไขมัน";
+        }
+
+        // อัปเดตข้อมูลขึ้นหน้าจอ
+        document.getElementById('workoutTitle').innerText = workoutTitle;
+        document.getElementById('workoutDesc').innerText = workoutDesc;
+        document.getElementById('cardioDisplay').innerText = dailyCardio;
+
+        // จัดการแสดงปุ่มกด
+        const btnMain = document.getElementById('viewTableBtn');
+        const btnAbs = document.getElementById('viewAbsBtn');
+
+        if(imageName !== "") { 
+            btnMain.style.display = "inline-block"; 
+            btnMain.onclick = function() { openModal(imageName); }; 
         } else { 
-            if (dayOfWeek === 1) imageName = (currentDay > 56) ? "p3-a.jpg" : "p2-a.jpg";
-            else if (dayOfWeek === 2) imageName = (currentDay > 56) ? "p3-b.jpg" : "p2-b.jpg";
-            else if (dayOfWeek === 4) imageName = (currentDay > 56) ? "p3-c.jpg" : "p2-c.jpg";
-            else if (dayOfWeek === 5) imageName = (currentDay > 56) ? "p3-d.jpg" : "p2-d.jpg";
-            else imageName = "";
-            workoutTitle = imageName ? "Check Table" : "Cardio / Rest";
+            btnMain.style.display = "none"; 
+        }
+
+        if(absImageName !== "") { 
+            btnAbs.style.display = "inline-block"; 
+            btnAbs.onclick = function() { openModal(absImageName); }; 
+        } else { 
+            btnAbs.style.display = "none"; 
         }
         
-        document.getElementById('workoutTitle').innerText = imageName ? "Tap button below" : workoutTitle;
-        document.getElementById('workoutDesc').innerText = imageName ? "View today's workout table" : "Focus on recovery or cardio";
-        const btn = document.getElementById('viewTableBtn');
-        if(imageName !== "") { btn.style.display = "block"; btn.onclick = function() { openModal(imageName); }; }
-        else { btn.style.display = "none"; }
-        
-        function openModal(imgName) { document.getElementById('workoutImage').src = imgName; document.getElementById('imageModal').style.display = "flex"; }
+        function openModal(imgSrc) { document.getElementById('workoutImage').src = imgSrc; document.getElementById('imageModal').style.display = "flex"; }
         function closeModal() { document.getElementById('imageModal').style.display = "none"; }
 
-        // --- 4. History Log ---
-        const historyKey = 'belle_fit_log_v8'; // เปลี่ยน key เพื่อไม่ให้ตีกับเวอร์ชันเก่า
+        // --- 5. HISTORY LOG ---
+        const historyKey = 'belle_fit_log_v8'; 
         let historyData = [];
         window.onload = function() {
             const savedData = localStorage.getItem(historyKey);
